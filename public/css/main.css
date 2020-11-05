@@ -1,0 +1,368 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
+
+/* Propriedades globais */
+:root {
+  --space-elements: 15px;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #9d9d9d;
+  border-radius: 5px;
+  border: 1px solid #fff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #858585;
+}
+
+* {
+  margin: 0;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Montserrat Regular";
+}
+
+/* Header */
+.header-task {
+  height: 100px;
+  font-size: 24px;
+}
+
+.header-task .menu {
+  text-align: center;
+}
+
+/* Area add new task */
+.area-tasks {
+  height: 100px;
+}
+
+#formCard {
+  display: flex;
+  align-items: center;
+}
+
+/* Labels */
+.area-tasks label {
+  font-size: 18px;
+  color: #000000;
+  margin-right: 10px;
+  font-weight: 600;
+  font-family: "Montserrat";
+}
+
+.group {
+  margin-right: 10px;
+}
+
+/* Input Adicionar */
+.area-tasks .input {
+  width: 490px;
+  height: 40px;
+  border: 1px solid #50b6cf;
+  border-radius: 7px;
+  padding: 12px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"] + label {
+  border: 1px solid #989898;
+  cursor: pointer;
+  display: inline-block;
+  height: 20px;
+  margin-right: 5px;
+  transition: all .3s ease-in .1s;
+  width: 20px;
+}
+
+input[type="radio"]:checked + label {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.253);
+}
+
+/* Botao Adicionar */
+.btn-add {
+  background-color: #50b6cf;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Roboto";
+  font-size: 25px;
+  font-weight: 500;
+  height: 40px;
+  outline: none;
+  transition: all 0.3s ease-in;
+  width: 145px;
+}
+
+.btn-add:hover {
+  background-color: #3e97ad;
+}
+
+.btn-open-form {
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  color: #50b6cf;
+  cursor: pointer;
+  font-family: "Roboto";
+  font-size: 20px;
+  font-weight: 500;
+  outline: none;
+  padding: 5px 15px;
+  transition: 0.3s all;
+}
+
+.btn-open-form:hover {
+  color: #1e8eaa;
+  transition: 0.4s all;
+  text-decoration: underline;
+}
+
+.btn-open-form:hover img {
+  transform: scale(1.15);
+  transition: 0.6s all;
+}
+
+.btn-open-form:active {
+  background-color: #ededed;
+  transition: 0.4s all;
+}
+
+.btn-open-form > img {
+  height: 42px;
+  margin-right: 5px;
+  vertical-align: middle;
+  user-select: none;
+  pointer-events: none;
+  width: 42px;
+  transition: 0.3s all;
+}
+
+/* Cores para add */
+.colors {
+  height: 20px;
+  width: 20px;
+}
+
+/* Cores do background do cabeçalho do cartao */
+.bg-no-check {
+  background-color: #ffa4a3;
+}
+
+.bg-yes-check {
+  background-color: #b8ff99;
+}
+
+/* Formatacao do cabecalho dos Cartões */
+.txt-no-check {
+  color: #e42c28;
+}
+
+.txt-yes-check {
+  color: #2b5a07;
+}
+
+/* Cartões de tarefas */
+.card-task {
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.25);
+  height: 200px;
+  width: 200px;
+  position: relative;
+  transition: 0.4s all;
+  overflow: hidden;
+}
+
+.card-task:hover {
+  box-shadow: 2px 5px 11px -1px rgba(0, 0, 0, 0.25);
+  transform: scale(0.96);
+  transition: 0.4s all;
+}
+
+/* Formatação do cabeçalho dos Cartões */
+.card-head {
+  font-family: "Roboto", sans-serif;
+  font-size: 10px;
+  padding: 5px 8px 3px;
+  user-select: none;
+}
+
+.card-head > img {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+/* Corpo dos cartoes das tarefas */
+.card-body {
+  font-family: "Open Sans";
+  font-size: 20px;
+  font-weight: 600;
+  padding: 15px 10px 35px;
+  height: 90%;
+  overflow-y: auto;
+}
+
+.card-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.card-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.card-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+.action-task {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  height: 25px;
+  outline: none;
+  transition: all 0.3s ease-in;
+  user-select: none;
+  width: 32px;
+}
+
+.action-task:hover {
+  opacity: 0.5;
+}
+
+/*Cores dos cartoes */
+.style1 {
+  background-color: #daf5fa;
+  color: #19b5dc;
+}
+
+.style1 .card-footer {
+  background-color: #daf5fa;
+}
+
+.style2 {
+  background-color: #d1fecb;
+  color: #58a51d;
+}
+
+.style2 .card-footer {
+  background-color: #d1fecb;
+}
+
+.style3 {
+  background-color: #f6d0f6;
+  color: #cb65cb;
+}
+
+.style3 .card-footer {
+  background-color: #f6d0f6;
+}
+
+.style4 {
+  background-color: #dcd0f3;
+  color: #9763f9;
+}
+
+.style4 .card-footer {
+  background-color: #dcd0f3;
+}
+
+.style5 {
+  background-color: #fcfccb;
+  color: #8f8f69;
+}
+
+.style5 .card-footer {
+  background-color: #fcfccb;
+}
+
+.style6 {
+  background-color: #fbd4b4;
+  color: #ec842e;
+}
+
+.style6 .card-footer {
+  background-color: #fbd4b4;
+}
+
+.style7 {
+  background-color: #ffffff;
+  color: #727272;
+}
+
+.style7 .card-footer {
+  background-color: #ffffff;
+}
+
+.container {
+  padding-left: var(--space-elements);
+  padding-right: var(--space-elements);
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(var(--space-elements) * -1);
+  margin-right: calc(var(--space-elements) * -1);
+}
+
+.col {
+  position: relative;
+  padding-left: var(--space-elements);
+  padding-right: var(--space-elements);
+  margin-top: 30px;
+}
+
+.spacing {
+  padding: 30px 0 60px;
+}
+
+.footer {
+  border-top: 1px solid #dedede;
+  color: #5a5a5a;
+  font-size: 13px;
+  padding: 30px 0;
+  text-align: center;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+ul li {
+  display: inline-block;
+}
