@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+  <title>Well Organized</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Well Organized</title>
 
   <link rel="icon" href="./public/assets/favicon.ico">
-  <link rel="stylesheet" href="./public/css/main.css">
+  <link rel="stylesheet" href="./public/css/style.css">
+
 </head>
 <body>
 
   <header class="header-task">
     <ul class="menu">
-      <li><a href="">A fazer</a></li>
-      <li><a href="">Arquivadas</a></li>
+      <li><a href="./">A fazer</a></li>
+      <li><a href="./arquivadas.html">Arquivadas</a></li>
     </ul>
   </header>
 
   <section class="area-tasks">
     <div class="container">
       <div class="row">
-        <button class="btn-open-form">
+        <button class="btn-open-form" id="btn-open-form">
           <img src="./public/assets/task-add-icon.png" alt="Icon add"> Adicionar Tarefa
         </button>
     
-        <form id="formCard" method="POST" action="javascript:void(0);">
-          <div class="group">
-            <label for="input_description">Descrição:</label>
-            <input type="text" name="description" class="input" id="input_description" placeholder="Digite na sua nota...">
-          </div>
-    
-          <div class="group">
-            <label for="input_color">Cor:</label>
-            <input type="radio" name="input_color" id="azul" value="style1">
-            <label class="style1" for="azul"></label>
-            <input type="radio" name="input_color" id="verde" value="style2">
-            <label class="style2" for="verde"></label>
-            <input type="radio" name="input_color" id="rosa" value="style3">
-            <label class="style3" for="rosa"></label>
-            <input type="radio" name="input_color" id="roxo" value="style4">
-            <label class="style4" for="roxo"></label>
-            <input type="radio" name="input_color" id="amarelo" value="style5">
-            <label class="style5" for="amarelo"></label>
-            <input type="radio" name="input_color" id="laranja" value="style6">
-            <label class="style6" for="laranja"></label>
-            <input type="radio" name="input_color" id="branco" value="style7">
-            <label class="style7" for="branco"></label>
-          </div>
-    
-          <input type="submit" id="submitForm" class="btn-add" value="Adicionar">
-        </form>
+        <div id="hide">
+          <form id="formCard" method="POST" action="javascript:void(0);">
+            <div class="group">
+              <label class="label" for="input_description">Descrição:</label>
+              <input type="text" name="description" class="input" id="input_description" placeholder="Digite na sua nota...">
+            </div>
+      
+            <div class="group radio">
+              <label class="label" for="input_color">Cor:</label>
+              <input type="radio" name="input_color" id="azul" value="style1">
+              <label class="style1" for="azul"></label>
+              <input type="radio" name="input_color" id="verde" value="style2">
+              <label class="style2" for="verde"></label>
+              <input type="radio" name="input_color" id="rosa" value="style3">
+              <label class="style3" for="rosa"></label>
+              <input type="radio" name="input_color" id="roxo" value="style4">
+              <label class="style4" for="roxo"></label>
+              <input type="radio" name="input_color" id="amarelo" value="style5">
+              <label class="style5" for="amarelo"></label>
+              <input type="radio" name="input_color" id="laranja" value="style6">
+              <label class="style6" for="laranja"></label>
+              <input type="radio" name="input_color" id="branco" value="style7">
+              <label class="style7" for="branco"></label>
+            </div>
+      
+            <input type="submit" id="submitForm" class="btn-add" value="Adicionar">
+          </form>
+        </div>
       </div>
     </div>
   </section>
@@ -61,7 +63,7 @@
       <div class="row" id="orderedList"></div>
     </div>
   </section>
-
+  
 
   <footer class="footer">
     <div class="container">
@@ -69,6 +71,7 @@
     </div>
   </footer>
 
+  <script src="./public/js/alert.js"></script>
   <script src="./public/js/main.js"></script>
 </body>
 </html>
