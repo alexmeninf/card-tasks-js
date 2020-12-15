@@ -1,4 +1,4 @@
-var listaTarefas;
+var storageList;
 
 jQuery(function () {
 
@@ -18,27 +18,28 @@ jQuery(function () {
   });
 });
 
-function listar() {
-  listaTarefas = JSON.parse(localStorage.getItem("listaTarefas")); //get data from storage
 
-  var list = $("#orderedList");
-  var listArchived = $("#orderedListArchived");
+listar = () => {
+  storageList = JSON.parse(localStorage.getItem("storageList")); //get data from storage
+
+  let list = $("#orderedList");
+  let listArchived = $("#orderedListArchived");
 
   if (list != null) {
-    list.html("");
+    list.html("");    
   }
 
   if (listArchived != null) {
     listArchived.html("");
   }
 
-  if (listaTarefas !== null) {
+  if (storageList !== null) {
     //if data exist (todos are in storage)
-    listaTarefas.forEach(function (v, index) {
+    storageList.forEach(function (v, index) {
       //append each element into the dom
-      var task = JSON.parse(listaTarefas[index]);
-      var cardItem = document.createElement("div"); //2
-      var status,
+      let task = JSON.parse(storageList[index]);
+      let cardItem,
+        status,
         img,
         text,
         imgArchive = "",
@@ -66,51 +67,30 @@ function listar() {
         imgExcluir = "./public/assets/trash-gray-scale.png";
       }
 
-      cardItem.className = "col"; // add classe na div anterior
-      cardItem.innerHTML =
-        '<div class="card-task ' +
-        task.color +
-        " " +
-        status +
-        '">' +
-        '<div class="card-head">' +
-        '<button type="button" class="checked-list" onClick="editar(this.id)" data-id="' +
-        index +
-        '" id="check-' +
-        index +
-        '"><img src="' +
-        img +
-        '" alt="unchecked"></button>' +
-        text +
-        "</div>" +
-        '<div class="card-body">' +
-        task.description +
-        "</div>" +
-        '<div class="card-footer">' +
-        '<button class="action-task archived" ' +
-        action1 +
-        ' data-id="' +
-        index +
-        '" id="archived-' +
-        index +
-        '" title="Arquivar">' +
-        '<img src="' +
-        imgArchive +
-        '" alt="arquivar">' +
-        "</button>" +
-        '<button class="action-task remove" title="Excluir" ' +
-        action2 +
-        ' data-id="' +
-        index +
-        '" id="remove-' +
-        index +
-        '">' +
-        '<img src="' +
-        imgExcluir +
-        '" alt="excluir">' +
-        "</button>" +
-        "</div>" +
-        "</div>";
+      cardItem = `<div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+          <div class="card-task ${task.color} ${status}">
+            <div class="card-head">
+              <button type="button" class="checked-list" onClick="editar(this.id)" 
+              data-id="${index}" id="check-${index}">
+                <img src="${img}" alt="unchecked">
+              </button>
+              ${text}
+            </div>
+            <div class="card-body">
+              ${task.description}
+            </div>
+            <div class="card-footer">
+              <button class="action-task archived" ${action1} 
+              data-id="${index}" id="archived-${index}" title="Arquivar">
+                <img src="${imgArchive}" alt="arquivar">
+              </button>
+              <button class="action-task remove" title="Excluir" 
+              ${action2} data-id="${index}" id="remove-${index}">
+                <img src="${imgExcluir}" alt="excluir">
+              </button>
+            </div>
+          </div>
+        </div>`;
 
       if (task.archived == true) {
         if (listArchived != null) {
@@ -122,103 +102,123 @@ function listar() {
         }
       }
     });
+
   } else {
     //if nothing exist in storage, keep todos array empty
-    listaTarefas = [];
+    storageList = [];
+  }
+
+  if ($.trim($(list).html())=='') {
+    list.html('<div class="col-12">Ainda não existem tarefas aqui. :)</div>');    
+  }
+
+  if ($.trim($(listArchived).html())=='') {
+    listArchived.html('<div class="col-12">Sem tarefas arquivadas.</div>');
   }
 }
 
-function adicionar() {
-  var inputDesc = $("#input_description").val();
-  var inputColor = $("input[name=input_color]:checked");
+
+adicionar = () => {
+  let inputDesc = $("#input_description").val();
+  let inputColor = $("input[name=input_color]:checked");
 
   if (inputDesc.trim() == "") {
-    message("Coloque uma descrição", "Campo obrigatório");
+    alert("Campo obrigatório! Coloque uma descrição");
+
   } else if (!!inputColor.val() === false) {
-    message("Escolha a cor do seu cartão", "Campo obrigatório");
+    alert("Campo obrigatório! Escolha a cor do seu cartão");
+
   } else {
+
+    $("#submitForm").val("Adicionando...");
+
     // Add item
-    var cliente = JSON.stringify({
-      description: inputDesc.value,
-      color: inputColor,
+    let cliente = JSON.stringify({
+      description: inputDesc,
+      color: inputColor.val(),
       status: false,
       archived: false,
     });
-    listaTarefas.push(cliente);
-    localStorage.setItem("listaTarefas", JSON.stringify(listaTarefas));
 
-    // clear inputs
-    var inputColor = $("input[name=input_color]").attr('checked', false);
-
-
-    $("#btn-open-form").css({ display: "block" });
-    $("#hide").css({display: "none"});
+    storageList.push(cliente);
+    localStorage.setItem("storageList", JSON.stringify(storageList));
+  
+    setTimeout(() => {
+      // clear inputs
+      $("#input_description").val("");
+      $("input[name=input_color]").prop('checked', false);
+    
+      $("#submitForm").val("Adicionar");
+  
+      $("#btn-open-form").css({ display: "block" });
+      $("#hide").css({display: "none"});
+    }, 500);
 
     return true;
   }
 }
 
-function arquivar(clicked_id) {
 
-  var indice = $("#" + clicked_id).attr("data-id");
-
-  var items = JSON.parse(localStorage.getItem("listaTarefas"));
-  var item = JSON.parse(items[indice]);
-
-  var arquivedValue = true;
+arquivar = (clicked_id) => {
+  let indice = $("#" + clicked_id).attr("data-id");
+  let items = JSON.parse(localStorage.getItem("storageList"));
+  let item = JSON.parse(items[indice]);
+  let arquivedValue = true;
 
   if (item.archived == true) {
     arquivedValue = false;
-    message("O seu item foi desarquivado.", "Item Retirado");
+    alert("Item Retirado!");
+
   } else {
-    message("O seu item foi arquivado.", "Item Arquivado");
+    alert("O seu item foi arquivado.");
   }
 
-  listaTarefas[indice] = JSON.stringify({
+  storageList[indice] = JSON.stringify({
     description: item.description,
     color: item.color,
     status: true,
     archived: arquivedValue,
   }); //Altera o item selecionado na tabela
-  localStorage.setItem("listaTarefas", JSON.stringify(listaTarefas));
+
+  localStorage.setItem("storageList", JSON.stringify(storageList));
   listar();
 }
 
-function editar(clicked_id) {
-  var itemSelected = document.getElementById(clicked_id);
-  var indice = itemSelected.getAttribute("data-id");
 
-  var items = JSON.parse(localStorage.getItem("listaTarefas"));
-  var item = JSON.parse(items[indice]);
-
-  var statusValue = true;
+editar = (clicked_id) => {
+  let indice = $("#" + clicked_id).attr("data-id");
+  let items = JSON.parse(localStorage.getItem("storageList"));
+  let item = JSON.parse(items[indice]);
+  let statusValue = true;
 
   if (item.archived == false) {
     if (item.status == true) {
       statusValue = false;
     }
 
-    listaTarefas[indice] = JSON.stringify({
+    storageList[indice] = JSON.stringify({
       description: item.description,
       color: item.color,
       status: statusValue,
       archived: false,
     }); //Altera o item selecionado na tabela
-    localStorage.setItem("listaTarefas", JSON.stringify(listaTarefas));
+
+    localStorage.setItem("storageList", JSON.stringify(storageList));
     listar();
+
   } else {
-    message("Desarquive para desmarcar", "Ação inválida");
+    alert("Ação inválida! Desarquive para desmarcar");
   }
 }
 
-function excluir(clicked_id) {
-  var removeItem = document.getElementById(clicked_id);
-  var indice = removeItem.getAttribute("data-id");
 
-  listaTarefas = JSON.parse(localStorage.getItem("listaTarefas"));
-  listaTarefas.splice(indice, 1);
-  localStorage.setItem("listaTarefas", JSON.stringify(listaTarefas));
+excluir = (clicked_id) => {
+  let indice = $("#" + clicked_id).attr('data-id');
 
-  message("Excluído com sucesso!", "Item apagado");
+  storageList = JSON.parse(localStorage.getItem("storageList"));
+  storageList.splice(indice, 1);
+  localStorage.setItem("storageList", JSON.stringify(storageList));
+
+  alert("Excluído com sucesso!");
   listar();
 }
